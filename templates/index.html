@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Catálogo | Mobify{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <h1>Design funcional para a tua casa</h1>
+  <p>Móveis modulares e acessíveis inspirados no estilo IKEA.</p>
+</section>
+
+<form class="filters" method="get">
+  <input type="text" name="q" placeholder="Pesquisar móveis..." value="{{ search }}" />
+  <select name="category">
+    <option value="">Todas as categorias</option>
+    {% for c in categories %}
+      <option value="{{ c['category'] }}" {% if selected_category == c['category'] %}selected{% endif %}>{{ c['category'] }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">Filtrar</button>
+</form>
+
+<section class="grid">
+  {% for p in products %}
+    <article class="card">
+      <img src="{{ p['image_url'] or 'https://placehold.co/640x480?text=Mobify' }}" alt="{{ p['name'] }}" />
+      <div>
+        <small>{{ p['category'] }}</small>
+        <h3>{{ p['name'] }}</h3>
+        <p>{{ p['description'][:95] }}...</p>
+        <strong>{{ "%.2f"|format(p['price']) }} €</strong>
+      </div>
+      <a class="btn" href="{{ url_for('product_detail', product_id=p['id']) }}">Ver detalhes</a>
+    </article>
+  {% else %}
+    <p>Sem produtos para os filtros escolhidos.</p>
+  {% endfor %}
+</section>
+{% endblock %}
