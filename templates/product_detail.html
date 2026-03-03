@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}{{ product['name'] }} | Mobify{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+  <img src="{{ product['image_url'] or 'https://placehold.co/800x600?text=Mobify' }}" alt="{{ product['name'] }}" />
+  <div>
+    <small>{{ product['category'] }}</small>
+    <h1>{{ product['name'] }}</h1>
+    <p>{{ product['description'] }}</p>
+    <ul>
+      <li><strong>Dimensões:</strong> {{ product['dimensions'] or 'N/D' }}</li>
+      <li><strong>Cores:</strong> {{ product['colors'] or 'N/D' }}</li>
+      <li><strong>Stock:</strong> {{ product['stock'] }}</li>
+    </ul>
+    <h2>{{ "%.2f"|format(product['price']) }} €</h2>
+    <button disabled>Adicionar ao carrinho (demo)</button>
+  </div>
+</div>
+{% endblock %}
